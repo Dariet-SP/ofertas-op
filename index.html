@@ -7,11 +7,11 @@
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #e6f3f5; /* Celeste claro como fondo */
+      background-color: #e6f3f5;
       text-align: center;
       padding: 20px;
       margin: 0;
-      color: #2e7d32; /* Verde oscuro para texto */
+      color: #2e7d32;
     }
     .header {
       position: relative;
@@ -21,7 +21,7 @@
       position: absolute;
       top: 10px;
       right: 10px;
-      width: 150px; /* Ajusta el tamaño del logo */
+      width: 150px;
       height: auto;
     }
     h1 {
@@ -37,22 +37,27 @@
       justify-content: center;
     }
     .product {
-      border: 2px solid #4caf50; /* Verde medio para bordes */
+      border: 2px solid #4caf50;
       margin: 15px;
       padding: 15px;
       width: 200px;
       background-color: #ffffff;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       border-radius: 10px;
       transition: transform 0.2s;
     }
     .product:hover {
-      transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
+      transform: scale(1.05);
     }
     .product img {
       width: 150px;
       height: 200px;
       border-bottom: 2px solid #4caf50;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+    .product img:hover {
+      opacity: 0.8;
     }
     .product h3 {
       color: #2e7d32;
@@ -60,12 +65,12 @@
       margin: 10px 0;
     }
     .product p {
-      color: #388e3c; /* Verde un poco más claro para precios */
+      color: #388e3c;
       font-size: 1.1em;
       margin: 5px 0;
     }
     button {
-      background-color: #25D366; /* Verde de WhatsApp */
+      background-color: #25D366;
       color: white;
       border: none;
       padding: 8px 15px;
@@ -76,6 +81,56 @@
     button:hover {
       background-color: #128C7E;
     }
+    
+    /* Estilos para el modal - CENTRADO PERFECTO */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      overflow: auto;
+    }
+    .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 90%;
+      max-height: 90%;
+    }
+    .modal-img {
+      max-width: 80vw;
+      max-height: 80vh;
+      border: 5px solid white;
+      border-radius: 5px;
+      object-fit: contain;
+    }
+    .close {
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 35px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .close:hover {
+      color: #25D366;
+    }
+    .caption {
+      margin-top: 15px;
+      color: white;
+      font-size: 1.5em;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -85,82 +140,125 @@
   <h1>Súper ofertas</h1>
   <div class="product-container">
     <div class="product">
-      <img src="img/gutaperchas.jpg" alt="Producto 1" width="150">
+      <img src="img/gutaperchas.jpg" alt="Conos de gutapercha" width="150" onclick="openModal(this)">
       <h3>Conos de gutapercha</h3>
       <p>S/. 5 </p>
-      <button onclick="window.location.href='https://wa.me/938105365?text=Hola,%20quiero%20comprar%20Conos%20de%20gutapercha%20(S/5)'">Comprar</button>
+      <button onclick="comprarProducto('Conos de gutapercha', 'S/. 5', 'img/gutaperchas.jpg')">Comprar</button>
     </div>
     <div class="product">
-      <img src="img/coon.jpg" alt="Producto 2" width="150">
+      <img src="img/coon.jpg" alt="Alicate Coon" width="150" onclick="openModal(this)">
       <h3>Alicate Coon</h3>
       <p>S/. 50.00</p>
-      <button onclick="window.location.href='https://wa.me/938105365?text=Hola,%20quiero%20comprar%20Producto%202%20($15)'">Comprar</button>
+      <button onclick="comprarProducto('Alicate Coon', 'S/. 50.00', 'img/coon.jpg')">Comprar</button>
     </div>
     <div class="product">
-      <img src="img/cosa-maquira.png" alt="Producto 3" width="150">
-      <h3></h3>
-      <p>Precio: $15</p>
-      <button onclick="window.location.href='https://wa.me/938105365?text=Hola,%20quiero%20comprar%20Producto%202%20($15)'">Comprar</button>
+      <img src="img/cosa-maquira.png" alt="Producto Maquira" width="150" onclick="openModal(this)">
+      <h3>Jeringa Maquira</h3>
+      <p>S/. 15.00</p>
+      <button onclick="comprarProducto('Producto Maquira', 'S/. 15.00', 'img/cosa-maquira.png')">Comprar</button>
     </div>
     <div class="product">
-      <img src="img/cepillos.jpg" alt="Producto 4" width="150">
+      <img src="img/cepillos.jpg" alt="Cepillos 3M" width="150" onclick="openModal(this)">
       <h3>Cepillos 3M</h3>
       <p>S/. 20.00 </p>
-      <button onclick="window.location.href='https://wa.me/938105365?text=Hola,%20quiero%20comprar%20Producto%202%20($15)'">Comprar</button>
+      <button onclick="comprarProducto('Cepillos 3M', 'S/. 20.00', 'img/cepillos.jpg')">Comprar</button>
     </div>
     <div class="product">
-      <img src="img/porta cepillo.jpg" alt="Producto 5" width="150">
+      <img src="img/porta cepillo.jpg" alt="Porta cepillos" width="150" onclick="openModal(this)">
       <h3>Porta cepillos</h3>
       <p>S/. 15.00</p>
-      <button onclick="window.location.href='https://wa.me/938105365?text=Hola,%20quiero%20comprar%20Producto%202%20($15)'">Comprar</button>
+      <button onclick="comprarProducto('Porta cepillos', 'S/. 15.00', 'img/porta cepillo.jpg')">Comprar</button>
     </div>
     <div class="product">
-      <img src="img/kfile21mm.png" alt="Producto 6" width="150">
+      <img src="img/kfile21mm.png" alt="Limas K-file" width="150" onclick="openModal(this)">
       <h3>Limas K-file</h3>
       <p>S/. 20.00</p>
-      <button onclick="window.location.href='https://wa.me/938105365?text=Hola,%20quiero%20comprar%20Producto%202%20($15)'">Comprar</button>
+      <button onclick="comprarProducto('Limas K-file', 'S/. 20.00', 'img/kfile21mm.png')">Comprar</button>
     </div>
     <div class="product">
-      <img src="img/kfile28.png" alt="Producto 7" width="150">
+      <img src="img/kfile28.png" alt="Limas K-file" width="150" onclick="openModal(this)">
       <h3>Limas K-file</h3>
       <p>S/. 20.00</p>
-      <button onclick="window.location.href='https://wa.me/938105365?text=Hola,%20quiero%20comprar%20Producto%202%20($15)'">Comprar</button>
+      <button onclick="comprarProducto('Limas K-file', 'S/. 20.00', 'img/kfile28.png')">Comprar</button>
     </div>
     <div class="product">
-      <img src="img" alt="Producto 8" width="150">
-      <h3>Producto 2</h3>
-      <p>Precio: $15</p>
-      <button onclick="window.location.href='https://wa.me/938105365?text=Hola,%20quiero%20comprar%20Producto%202%20($15)'">Comprar</button>
+      <img src="img/kfile_25-31-20.png" alt="Limas K-file 2" width="150" onclick="openModal(this)">
+      <h3>Limas K-file 2</h3>
+      <p>S/. 20.00</p>
+      <button onclick="comprarProducto('Limas K-file 2', 'S/. 20.00', 'img/kfile_25-31-20.png')">Comprar</button>
     </div>
     <div class="product">
-      <img src="producto2.jpg" alt="Producto 9" width="150">
-      <h3>Producto 2</h3>
-      <p>Precio: $15</p>
-      <button onclick="window.location.href='https://wa.me/938105365?text=Hola,%20quiero%20comprar%20Producto%202%20($15)'">Comprar</button>
+      <img src="img/klife_25-31.png" alt="Limas K-file" width="150" onclick="openModal(this)">
+      <h3>Limas K-file</h3>
+      <p>S/. 25.00</p>
+      <button onclick="comprarProducto('Limas K-file', 'S/. 25.00', 'img/klife_25-31.png')">Comprar</button>
     </div>
     <div class="product">
-      <img src="producto2.jpg" alt="Producto 10" width="150">
-      <h3>Producto 2</h3>
-      <p>Precio: $15</p>
-      <button onclick="window.location.href='https://wa.me/938105365?text=Hola,%20quiero%20comprar%20Producto%202%20($15)'">Comprar</button>
+      <img src="img/la-rosa-pato.png" alt="Alicate La Rosa Puño" width="150" onclick="openModal(this)">
+      <h3>Alicate La Rosa Puño</h3>
+      <p>S/. 100.00</p>
+      <button onclick="comprarProducto('Alicate La Rosa Puño', 'S/. 100.00', 'img/la-rosa-pato.png')">Comprar</button>
     </div>
-    <div class="product">
-      <img src="producto2.jpg" alt="Producto 11" width="150">
-      <h3>Producto 2</h3>
-      <p>Precio: $15</p>
-      <button onclick="window.location.href='https://wa.me/938105365?text=Hola,%20quiero%20comprar%20Producto%202%20($15)'">Comprar</button>
+  </div>
+
+  <!-- El modal para mostrar la imagen ampliada -->
+  <div id="imageModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+      <img id="expandedImg" class="modal-img">
+      <div id="imgCaption" class="caption"></div>
     </div>
-    <div class="product">
-      <img src="producto2.jpg" alt="Producto 12" width="150">
-      <h3>Producto 2</h3>
-      <p>Precio: $15</p>
-      <button onclick="window.location.href='https://wa.me/938105365?text=Hola,%20quiero%20comprar%20Producto%202%20($15)'">Comprar</button>
-    </div>
-    <div class="product">
-      <img src="producto2.jpg" alt="Producto 13" width="150">
-      <h3>Producto 2</h3>
-      <p>Precio: $15</p>
-      <button onclick="window.location.href='https://wa.me/938105365?text=Hola,%20quiero%20comprar%20Producto%202%20($15)'">Comprar</button>
-    </div>
+  </div>
+
+  <script>
+    // Función para abrir el modal con la imagen seleccionada
+    function openModal(imgElement) {
+      const modal = document.getElementById("imageModal");
+      const modalImg = document.getElementById("expandedImg");
+      const captionText = document.getElementById("imgCaption");
+      
+      modal.style.display = "block";
+      modalImg.src = imgElement.src;
+      captionText.innerHTML = imgElement.alt;
+    }
+
+    // Función para cerrar el modal
+    function closeModal() {
+      document.getElementById("imageModal").style.display = "none";
+    }
+
+    // Función para comprar producto
+    function comprarProducto(nombre, precio, imagen) {
+      // Codificar los parámetros para URL
+      const mensaje = `Hola, estoy interesado en comprar el siguiente producto:
+      
+      Producto: ${nombre}
+      Precio: ${precio}
+      
+      ¿Podrías brindarme más información?`;
+      
+      const mensajeCodificado = encodeURIComponent(mensaje);
+      const urlWhatsApp = `https://wa.me/51938105365?text=${mensajeCodificado}`;
+      
+      // Abrir en nueva pestaña
+      window.open(urlWhatsApp, '_blank');
+    }
+
+    // Cerrar el modal si se hace clic fuera de la imagen
+    window.onclick = function(event) {
+      const modal = document.getElementById("imageModal");
+      if (event.target == modal) {
+        closeModal();
+      }
+    }
+
+    // Cerrar con tecla ESC
+    document.onkeydown = function(evt) {
+      evt = evt || window.event;
+      if (evt.key === "Escape") {
+        closeModal();
+      }
+    };
+  </script>
 </body>
 </html>
